@@ -49,7 +49,7 @@ aws configure
 3) 환경 변수 설정
 ```
 chmod +x env.sh
-./env.sh
+source env.sh
 ```
 
 4) 도커 이미지 빌드 및 ecr 푸시
