@@ -9,18 +9,50 @@
 * AWS CLI 설치 및 구성
 * AWS ECR 레포지토리 생성
 
-1) AWS CLI 구성
+## 진행 과정
+
+1) 모델은 AWS S3로부터 가져오고, Lambda 함수에서는 해당 모델을 가져오는 과정을 진행합니다. \
+이를 위해 AWS S3에 모델을 저장하고 변수 값을 설정해줍니다.
+
+```
+vi lambda_function.py
+
+def lambda_handler(event, context):
+    # S3 버킷과 모델 파일 정보
+    bucket_name = ''
+    object_key = '.pth'
+    download_path = '/tmp/.pth'
+```
+object_key = 모델 이름 \
+download_path = '/tmp/모델 이름' 
+
+
+```
+vi env.sh
+
+export IMAGE_NAME="image name"
+export ECR_NAME="ecr-name"
+export AWS_ACCOUNT_ID="123456789012"
+export AWS_REGION="ap-northeast-2"
+```
+
+IMAGE_NAME = 설정할 이미지 이름 \
+ECR_NAME = AWS ECR 이름 \
+AWS_ACCOUNT_ID = ECR URI 앞에 포함된 ID \
+AWS_REGION = 서울 기준 ap-northeast-2 
+
+2) AWS CLI 구성
 ```
 aws configure
 ```
 
-2) 환경 변수 설정
+3) 환경 변수 설정
 ```
 chmod +x env.sh
 ./env.sh
 ```
 
-3) 도커 이미지 빌드 및 ecr 푸시
+4) 도커 이미지 빌드 및 ecr 푸시
 ```
 chmod +x build.sh
 ./build.sh
